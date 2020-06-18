@@ -18,15 +18,15 @@ The sample utility has the following options:
 
 ```
 Usage of gopngquant:
-  -In string
-        Input filename
-  -Out string
-        Output filename
-  -Speed int
-        Speed (1 slowest, 10 fastest) (default: 3)
-  -Compression int
-        Compression level (DefaultCompression = 0, NoCompression = -1, BestSpeed = -2, BestCompression = -3) (default: BestCompression )
-  -Version
+  -input string
+        input filename
+  -output string
+        output filename
+  -speed int
+        speed (1 slowest, 10 fastest) (default: 3)
+  -compression int
+        compression level (DefaultCompression = 0, NoCompression = -1, BestSpeed = -2, BestCompression = -3) (default: BestCompression )
+  -version
 ```
 
 ## BUILDING

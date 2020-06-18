@@ -1,3 +1,3 @@
-module github.com/ultimate-guitar/go-imagequant
+module github.com/bbiao/go-imagequant
 
 go 1.12

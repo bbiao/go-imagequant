@@ -8,6 +8,30 @@ import (
 	"image/png"
 )
 
+type Options struct {
+	Compression png.CompressionLevel
+	Speed       int
+	MinQuality  int
+	MaxQuality  int
+	Gamma       float64
+	Dithering   float32
+	Posterize   int
+	Colors      int
+}
+
+var DefaultOptions = &Options{
+	Compression: png.BestCompression,
+	Speed:       3,
+	MinQuality:  0,
+	MaxQuality:  100,
+	// fixed gamma ~2.2 for the web. PNG can't store exact 1/2.2
+	// NB: can't change gamma here, because output_color is allowed to be an sRGB tag
+	Gamma:     0.45455,
+	Dithering: 1.,
+	Posterize: 0,
+	Colors:    256,
+}
+
 // ImageToRgba32 gets the image struct and return []byte where each pixel encoded to 4 byte (R+G+B+A)
 func ImageToRgba32(im image.Image) (ret []byte) {
 	w := im.Bounds().Max.X
@@ -50,7 +74,7 @@ func Rgb8PaletteToGoImage(w, h int, rgb8data []byte, pal color.Palette) image.Im
 
 // Crush gets PNG image as []byte, speed int (from 1 to 10, 1 is slowest) and return optimized PNG image as []byte and error.
 // In most cases you should use this function for image optimization.
-func Crush(image []byte, speed int, compression png.CompressionLevel) (out []byte, err error) {
+func Crush(image []byte, opts *Options) (out []byte, err error) {
 	reader := bytes.NewReader(image)
 	img, err := png.Decode(reader)
 	if err != nil {
@@ -66,9 +90,24 @@ func Crush(image []byte, speed int, compression png.CompressionLevel) (out []byt
 	}
 	defer attr.Release()
 
-	err = attr.SetSpeed(speed)
+	err = attr.SetSpeed(opts.Speed)
 	if err != nil {
 		return nil, fmt.Errorf("SetSpeed: %s", err.Error())
+	}
+
+	err = attr.SetMinPosterization(opts.Posterize)
+	if err != nil {
+		return nil, fmt.Errorf("SetMinPosterization: %s", err.Error())
+	}
+
+	err = attr.SetQuality(opts.MinQuality, opts.MaxQuality)
+	if err != nil {
+		return nil, fmt.Errorf("SetQuality: %s", err.Error())
+	}
+
+	err = attr.SetMaxColors(opts.Colors)
+	if err != nil {
+		return nil, fmt.Errorf("SetMaxColors: %s", err.Error())
 	}
 
 	rgba32data := string(ImageToRgba32(img))
@@ -85,6 +124,13 @@ func Crush(image []byte, speed int, compression png.CompressionLevel) (out []byt
 	}
 	defer res.Release()
 
+	if err := res.SetOutputGamma(opts.Gamma); err != nil {
+		return nil, fmt.Errorf("SetOutputGamma: %s", err.Error())
+	}
+	if err := res.SetDitheringLevel(opts.Dithering); err != nil {
+		return nil, fmt.Errorf("SetDitheringLevel: %s", err.Error())
+	}
+
 	rgb8data, err := res.WriteRemappedImage()
 	if err != nil {
 		return nil, fmt.Errorf("WriteRemappedImage: %s", err.Error())
@@ -93,7 +139,7 @@ func Crush(image []byte, speed int, compression png.CompressionLevel) (out []byt
 	im2 := Rgb8PaletteToGoImage(res.GetImageWidth(), res.GetImageHeight(), rgb8data, res.GetPalette())
 
 	writer := bytes.NewBuffer(out)
-	encoder := &png.Encoder{CompressionLevel: compression}
+	encoder := &png.Encoder{CompressionLevel: opts.Compression}
 
 	err = encoder.Encode(writer, im2)
 	if err != nil {
