@@ -18,20 +18,31 @@ The sample utility has the following options:
 
 ```
 Usage of gopngquant:
+  -colors int
+        number of colors (default 256)
+  -compression int
+        compression level (DefaultCompression = 0, NoCompression = -1, BestSpeed = -2, BestCompression = -3) (default -3)
+  -ext string
+        file name suffix append to input file name if output not presents
   -input string
         input filename
+  -nofs
+        disable Floyd-Steinberg dithering
   -output string
         output filename
+  -quality string
+        don't save below min, use fewer colors below max (0-100) (default "0-100")
   -speed int
-        speed (1 slowest, 10 fastest) (default: 3)
-  -compression int
-        compression level (DefaultCompression = 0, NoCompression = -1, BestSpeed = -2, BestCompression = -3) (default: BestCompression )
+        speed (1 slowest, 10 fastest) (default 3)
+  -y    overwrite existing output file
   -version
 ```
 
 ## BUILDING
 
-Install a C11 compiler and simply `go get github.com/ultimate-guitar/go-imagequant`.
+Install libimagequant, in ubuntu, just run `sudo apt-get install libimagequant-dev`
+
+Install a C11 compiler and simply `go get github.com/bbiao/go-imagequant`.
 
 ## LICENSE
 I am releasing this binding under the ISC license, however, libimagequant itself is released under GPLv3-or-later and/or commercial licenses. You must comply with the terms of such a license when using this binding in a Go project.
