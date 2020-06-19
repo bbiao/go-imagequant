@@ -10,7 +10,7 @@ ARCHIVE_NAME=libimagequant-${LIB_VERSION}.tar.gz
 InstallLibImageQuant() {
     curl -Ss -L ${DOWNLOAD_URL} --output ${ARCHIVE_NAME}
     tar xzvf ${ARCHIVE_NAME} -C .
-    cd libimagequant-${LIB_VERSION} && ./configure --prefix=/usr1 && make && sudo make install
+    cd libimagequant-${LIB_VERSION} && ./configure --prefix=/usr && make && sudo make install
 }
 
 InstallLibImageQuant
