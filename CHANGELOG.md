@@ -1,4 +1,4 @@
-#### 2020-06-18 2.12.1.1
+#### 2020-06-18 2.12.6.0
 * add options(quality, dithering, gamma, output file suffix)
 * remove all libimagequant source file and use system installed lib
 * rename go file to lower case
