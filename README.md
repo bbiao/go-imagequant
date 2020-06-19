@@ -1,5 +1,5 @@
 # Go-ImageQuant
-[![Go Report Card](https://goreportcard.com/badge/github.com/ultimate-guitar/go-imagequant)](https://goreportcard.com/report/github.com/ultimate-guitar/go-imagequant) [![Build Status](https://travis-ci.org/ultimate-guitar/go-imagequant.svg?branch=master)](https://travis-ci.org/ultimate-guitar/go-imagequant) [![GoDoc](https://godoc.org/github.com/ultimate-guitar/go-imagequant?status.svg)](https://godoc.org/github.com/ultimate-guitar/go-imagequant)
+[![Go Report Card](https://goreportcard.com/badge/github.com/bbiao/go-imagequant)](https://goreportcard.com/report/github.com/bbiao/go-imagequant) [![Build Status](https://travis-ci.org/bbiao/go-imagequant.svg?branch=master)](https://travis-ci.org/bbiao/go-imagequant) [![GoDoc](https://godoc.org/github.com/bbiao/go-imagequant?status.svg)](https://godoc.org/github.com/bbiao/go-imagequant)
 ## ABOUT
 This is Go bindings for libimagequant.
 
@@ -8,6 +8,8 @@ Libimagequant is the backend of pngquant app. It provides a high level of png im
 Libimagequant is a library for lossy recompression of PNG images to reduce their filesize.  This go-imagequant project is a set of bindings for libimagequant to enable its use from the Go programming language.
 
 This binding was written by hand. The result is somewhat more idiomatic than an automated conversion, but some  defer foo.Release() calls are required for memory management.
+
+This project forked from [https://github.com/ultimate-guitar/go-imagequant](https://github.com/ultimate-guitar/go-imagequant) repo.
 
 This project forked from [https://code.ivysaur.me/go-imagequant/](https://code.ivysaur.me/go-imagequant/) repo.
 
