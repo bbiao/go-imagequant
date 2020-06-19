@@ -11,7 +11,7 @@ dist: bionic
 sudo: false
 
 before_install:
-  - sudo apt-get -y install libimagequant-dev
+  - sudo apt-get -y install libimagequant
 
 matrix:
   allow_failures:
